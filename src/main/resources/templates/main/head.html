@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- CSS読込 -->
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/css/head/head.css}">
+<!--  JS読込 -->
+<script th:src="@{/webjars/jquery/jquery.min.js}" defer></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<title>日記アプリ</title>
+</head>
+<body class="bg-light">
+	<div class="container" style="max-width: none">
+		<div class="row">
+			<div class="col-3 sidebar-content" >
+				<nav  class="mt-2" id="calender">
+				</nav>
+			</div>
+			<div class="col main-content">
+				
+			</div>
+		</div>
+	</div>
+</body>
+
+<script type="text/javascript">
+	//カレンダーの日付をfor分で書き込む
+	console.log("aaa");
+	 const month_en = ['january', 'februrary', 'march', 'april', 'may', 'june', 'july', 'August', 'septenber', 'october', 'november', 'december'];
+	 const days = [31, 28, 30, 30, 31, 30, 31, 31, 30, 31, 30, 31]; //各月の日数
+	 let Calender = `<div class="panel-group text-center" id="accordion">`;
+	 for (var month=1; month<=12; month++) {
+		 Calender += `<div class="panel panel-default">
+			    		<div class="panel-heading">
+		     				<h4 class="panel-title">
+		        			<a data-toggle="collapse" data-parent="#accordion" href="#${month_en[month-1]}">${month}月</a>
+		      				</h4>
+		    			</div>
+		    			<div id="${month_en[month-1]}" class="panel-collapse collapsein">`;
+		 for (var day=1; day<=days[month-1]; day++) {
+			 Calender += `<div class="panel-body">${month}月${day}日</div>`;
+		 }
+		 Calender += `</div></div>`;
+	 }
+	 Calender += `</div>`;
+	 console.log(Calender);
+	 $('#calender').html(Calender);
+	 console.log($('#calender').html());
+</script>
+</html>
