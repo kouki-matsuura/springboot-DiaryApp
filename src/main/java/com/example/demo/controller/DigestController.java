@@ -5,11 +5,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/main")
-public class DiaryAppController {
-	@GetMapping("/top")
-	public String getTop() {
+@RequestMapping("/digest")
+public class DigestController {
+	@GetMapping("/digest")
+	public String getDigest() {
 		//head.htmlに画面遷移
-		return "main/Top";
+		return "digest/digest";
 	}
 }
