@@ -1,2 +1,9 @@
-INSERT INTO employee (id, name, age)
-VALUES('1', 'Tom', 30);
+/*ユーザーマスター*/
+INSERT INTO m_user(
+name,
+birthday,
+age,
+gender
+)VALUES
+('未入力','9999-01-01','0','0');
+/**/

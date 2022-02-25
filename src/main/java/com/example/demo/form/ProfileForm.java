@@ -16,13 +16,13 @@ public class ProfileForm {
 	@NotBlank(groups=ValidGroup1.class)
 	private String name;
 	
-	@Min(value=18, groups=ValidGroup2.class)
-	@Max(value=100, groups=ValidGroup2.class)
-	private Integer age;
-	
 	@DateTimeFormat(pattern="yyyy/MM/dd")
 	@NotNull(groups=ValidGroup1.class)
 	private Date birthday;
+	
+	@Min(value=18, groups=ValidGroup2.class)
+	@Max(value=100, groups=ValidGroup2.class)
+	private Integer age;
 	
 	@NotNull(groups=ValidGroup1.class)
 	private Integer gender;

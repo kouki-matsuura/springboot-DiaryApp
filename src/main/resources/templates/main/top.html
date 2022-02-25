@@ -14,14 +14,8 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <title>日記アプリ</title>
 </head>
 <body class="bg-light">
-	<div class="fixed-top">
-		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-			<a class="navbar-brand" href="#">DiaryApp</a>
-			<a class="nav-item nav-link" th:href="@{/digest/digest}">ダイジェスト</a>
-			<a class="nav-item nav-link" th:href="@{/contribute/contribute}">投稿</a>
-			<a class="nav-item nav-link" th:href="@{/profile/profile}">プロフィール</a>
-		</nav>
-	</div>
+	<!-- ヘッダー -->
+	<nav layout:replace="~{layout/header::header}"></nav>
 	<div class="container" style="max-width: none; margin-top: 60px;">
 		<div class="row">
 			<div class="col-3 sidebar-content" >

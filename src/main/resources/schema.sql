@@ -1,5 +1,8 @@
-CREATE TABLE IF NOT EXISTS employee (
- id VARCHAR(50) PRIMARY KEY,
- name VARCHAR(50),
- age INT
+/*ユーザマスタ*/
+CREATE TABLE IF NOT EXISTS m_user
+(
+name VARCHAR(50) PRIMARY KEY,
+ birthday DATE,
+ age INT,
+ gender INT
 );

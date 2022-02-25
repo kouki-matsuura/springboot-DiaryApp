@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{main/top}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- CSS読込 -->
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/css/head/head.css}">
+<!--  JS読込 -->
+<script th:src="@{/webjars/jquery/jquery.min.js}" defer></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<title>日記アプリ</title>
+</head>
+<body class="bg-light">
+	<nav layout:fragment="header">
+		<div class="fixed-top">
+			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+				<a class="navbar-brand" href="#">DiaryApp</a>
+				<a class="nav-item nav-link" th:href="@{/digest/digest}">ダイジェスト</a>
+				<a class="nav-item nav-link" th:href="@{/contribute/contribute}">投稿</a>
+				<a class="nav-item nav-link" th:href="@{/profile/profile}">プロフィール</a>
+			</nav>
+		</div>
+	</nav>
+</html>

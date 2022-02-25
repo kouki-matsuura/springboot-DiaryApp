@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Mapperとxmlのマッピング -->
+<mapper namespace="com.example.demo.repository.UserMapper">
+	<!-- マッピング定義 -->
+	<resultMap type="com.example.demo.domain.user.model.MUser" id="user">
+		<id column="name" property="name" />
+		<result column="birthday" property="birthday" />
+		<result column="age" property="age" />
+		<result column="gender" property="gender" />
+	</resultMap>
+	<!-- プロフィール更新 -->
+	<update id="updateOne">
+		update m_user set name = #{user.name}, birthday = #{user.birthday}, age = #{user.age}, gender = #{user.gender}
+	</update>
+	<!-- プロフィール検索 -->
+	<select id="findOne" resultMap="user">
+		select * from m_user 
+	</select>
+</mapper>
