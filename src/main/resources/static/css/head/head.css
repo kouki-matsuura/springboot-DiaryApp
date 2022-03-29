@@ -1,7 +1,41 @@
 .sidebar-content {
-	background : beige;
+	background : #5E6383;
 }
 
 .main-content {
-	background : #99FFFF;
+	background : #828496;
+}
+
+.main-nav {
+  text-align: right;
+  flex-direction: row;
+  height: 55px;
+}
+ 
+.nav-item {
+  display: inline;
+}
+
+.profile-edit:before{
+	font-family: "Font Awesome 5 Free";
+	content: "\f4ff";/*アイコンの種類*/
+	font-weight:900;
+	color: #ffffff;/*アイコン色*/
+	margin: 0.5rem;
+}
+
+.digest:before{
+	font-family: "Font Awesome 5 Free";
+	content: "\f518";/*アイコンの種類*/
+	font-weight:900;
+	color: #ffffff;/*アイコン色*/
+	margin: 0.5rem;
+}
+
+.contribute:before{
+	font-family: "Font Awesome 5 Free";
+	content: "\f044";/*アイコンの種類*/
+	font-weight:900;
+	color: #ffffff;/*アイコン色*/
+	margin: 0.5rem;
 }

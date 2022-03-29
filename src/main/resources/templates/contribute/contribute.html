@@ -7,12 +7,53 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <!-- CSS読込 -->
 <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 <link rel="stylesheet" th:href="@{/css/head/head.css}">
+<link rel="stylesheet" th:href="@{/css/top/calendar.css}">
+<link rel="stylesheet" th:href="@{/css/top/profile.css}">
+<link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
 <!--  JS読込 -->
 <script th:src="@{/webjars/jquery/jquery.min.js}" defer></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" th:src="@{/js/top/calendar.js}"></script>
 <title>投稿画面</title>
 </head>
 <body class="bg-light">
-	ここは投稿画面です
+	<nav layout:replace="~{layout/header::header}"></nav>
+	<div class="container" style="max-width: none; margin-top: 55px;">
+		<div class="row">
+			<div class="col-3 sidebar-content" >
+				<nav layout:replace="~{layout/sidebar::sidebar}"></nav>
+			</div>
+			<div class="col main-content">
+				<form id="contribute-form" method="post" action="/contribute/contribute" class="form-contribute ml-5 mr-5" th:object="${contributeForm}">
+					<h1 class="text-center" th:text="#{contribute.title}"></h1>
+					<!-- タイトル -->
+					<div class="form-group">
+						<label for="title" th:text="#{contribute.textTitle}"></label>
+						<input type="text" class="form-control" th:field="*{title}" th:errorclass="is-invalid"/>
+						<div class="invalid-feedback" th:errors="*{title}"></div>
+					</div>
+					<!-- 顔 -->
+					<div class="form-group">
+						<div th:each="item : ${faceMap}" class="form-check-inline">
+							<input type="radio" class="form-check-input" th:value="${item.value}" th:field="*{face}"
+							th:errorclass="is-invalid"/>
+							<label class="form-check-label" th:text="${item.key}"></label>
+						</div>
+						<div class="text-danger" th:if="${#fields.hasErrors('face')}" th:errors="*{face}"></div>
+			
+						
+					</div>
+					<!-- テキスト -->
+					<div class="form-group">
+						<label for="text" th:text="#{contribute.text}"></label>
+						<input type="text" class="form-control" th:field="*{text}" th:errorclass="is-invalid"/>
+						<div class="invalid-feedback" th:errors="*{text}"></div>
+					</div>
+					<!-- 完了ボタン -->
+					<input type="submit" th:value="#{contribute.complete}" class="btn btn-primary w-100 mt-3"/>
+				</form>
+			</div>
+		</div>
+	</div>
 </body>

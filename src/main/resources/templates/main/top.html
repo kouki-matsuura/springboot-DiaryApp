@@ -7,50 +7,45 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <!-- CSS読込 -->
 <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 <link rel="stylesheet" th:href="@{/css/head/head.css}">
+<link rel="stylesheet" th:href="@{/css/top/calendar.css}">
+<link rel="stylesheet" th:href="@{/css/top/profile.css}">
+<link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
 <!--  JS読込 -->
 <script th:src="@{/webjars/jquery/jquery.min.js}" defer></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" th:src="@{/js/top/calendar.js}"></script>
 <title>日記アプリ</title>
 </head>
 <body class="bg-light">
 	<!-- ヘッダー -->
 	<nav layout:replace="~{layout/header::header}"></nav>
-	<div class="container" style="max-width: none; margin-top: 60px;">
+	<div class="container" style="max-width: none; margin-top: 55px;">
 		<div class="row">
 			<div class="col-3 sidebar-content" >
-				<nav  class="mt-2" id="calender">
-				</nav>
+				<nav layout:replace="~{layout/sidebar::sidebar}"></nav>
 			</div>
 			<div class="col main-content">
-				
+				<table class="table table-striped table-bordered table-hover">
+					<thead class="thead-light">
+					<tr>
+						<th class="th-width">日付</th>
+						<th class="th-width">タイトル</th>
+						<th class="th-width">調子</th>
+						<th class="th-width">内容</th>
+					</tr>
+					</thead>
+					<tbody>
+						<tr th:each="diary: ${diaries}">
+							<td th:text="${#dates.format(diary.day, 'MM/dd')}"></td>
+							<td th:text="${diary.title}"></td>
+							<td th:text="${diary.face}"></td>
+							<td th:text="${diary.text}"></td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>
 </body>
-
-<script type="text/javascript">
-	//カレンダーの日付をfor分で書き込む
-	console.log("aaa");
-	 const month_en = ['january', 'februrary', 'march', 'april', 'may', 'june', 'july', 'August', 'septenber', 'october', 'november', 'december'];
-	 const days = [31, 28, 30, 30, 31, 30, 31, 31, 30, 31, 30, 31]; //各月の日数
-	 let Calender = `<div class="panel-group text-center" id="accordion">`;
-	 for (var month=1; month<=12; month++) {
-		 Calender += `<div class="panel panel-default">
-			    		<div class="panel-heading">
-		     				<h4 class="panel-title">
-		        			<a data-toggle="collapse" data-parent="#accordion" href="#${month_en[month-1]}">${month}月</a>
-		      				</h4>
-		    			</div>
-		    			<div id="${month_en[month-1]}" class="panel-collapse collapsein">`;
-		 for (var day=1; day<=days[month-1]; day++) {
-			 Calender += `<div class="panel-body">${month}月${day}日</div>`;
-		 }
-		 Calender += `</div></div>`;
-	 }
-	 Calender += `</div>`;
-	 console.log(Calender);
-	 $('#calender').html(Calender);
-	 console.log($('#calender').html());
-</script>
 </html>

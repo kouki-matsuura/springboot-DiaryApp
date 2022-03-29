@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{main/top}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Insert title here</title>
+</head>
+<nav layout:fragment="sidebar">
+	<div class="wrapper">
+		<h1 id="calendar_header"></h1>
+		<div id="next-prev-button">
+			<button id="calendar_prev" onclick="prev()">＜</button>
+			<button id="calendar_next" onclick="next()">＞</button>
+			</div>
+			<div id="calendar"></div>
+	</div>
+	<div class="profile_box">
+		<div class="box-title">プロフィール</div>
+		<div class="profile_center">
+		<!-- <img th:src="${base64image}"/> -->
+		プロフィール写真
+		<div class="profile_name">名前</div>
+		</div>
+		<p>自己紹介文</p>
+		<ul>
+			<li>性別:</li>
+			<li>出身地:</li>
+			<li>趣味:</li>
+		</ul>
+	</div>
+</nav>
+</html>
