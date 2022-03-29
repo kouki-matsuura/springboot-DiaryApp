@@ -11,6 +11,6 @@ CREATE TABLE IF NOT EXISTS m_diary
 (
 title VARCHAR(50) PRIMARY KEY,
 day DATE,
-face INT,
+face VARCHAR,
 text VARCHAR
 );

@@ -39,7 +39,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 						<tr th:each="diary: ${diaries}">
 							<td th:text="${#dates.format(diary.day, 'MM/dd')}"></td>
 							<td th:text="${diary.title}"></td>
-							<td th:text="${diary.face}"></td>
+							<td><img th:src="${diary.face}" style="width:70px; height:70px"></td>
 							<td th:text="${diary.text}"></td>
 						</tr>
 					</tbody>

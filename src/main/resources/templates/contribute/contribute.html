@@ -35,10 +35,10 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 					</div>
 					<!-- 顔 -->
 					<div class="form-group">
-						<div th:each="item : ${faceMap}" class="form-check-inline">
-							<input type="radio" class="form-check-input" th:value="${item.value}" th:field="*{face}"
+						<div th:each="item : ${condition}" class="form-check-inline">
+							<input type="radio" class="form-check-input" th:value="${item}" th:field="*{face}"
 							th:errorclass="is-invalid"/>
-							<label class="form-check-label" th:text="${item.key}"></label>
+							<img th:src="${item}" style="width:70px; height:70px">
 						</div>
 						<div class="text-danger" th:if="${#fields.hasErrors('face')}" th:errors="*{face}"></div>
 			

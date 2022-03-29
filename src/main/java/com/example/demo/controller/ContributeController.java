@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import java.util.Map;
+import java.io.IOException;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,20 +30,19 @@ public class ContributeController {
 	private ModelMapper modelMapper;
 	
 	@GetMapping("/contribute")
-	public String getContribute(@ModelAttribute ContributeForm form, Model model) {
+	public String getContribute(@ModelAttribute ContributeForm form, Model model) throws IOException {
 		//faceMapを取得
-		Map<String, Integer> faceMap = userApplicationService.getFaceMap();
-		model.addAttribute("faceMap", faceMap);
-		//head.htmlに画面遷移
+		String[] condition = userApplicationService.getFaceMap();
+		model.addAttribute("condition", condition);
 		return "contribute/contribute";
 	}
 	
 	@PostMapping("/contribute")
-	public String postContribute(Model model, @ModelAttribute @Validated(GroupOrder.class) ContributeForm form, BindingResult bindingResult) {
+	public String postContribute(Model model, @ModelAttribute @Validated(GroupOrder.class) ContributeForm form, BindingResult bindingResult) throws IOException {
 		if (bindingResult.hasErrors()) {
 			return getContribute(form, model);
 		}
-		//formをMTextクラスに変換
+		//formをMTextクラスに変換 
 		MText diary = modelMapper.map(form, MText.class);
 		System.out.print(diary);
 		userService.setDiary(diary);

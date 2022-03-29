@@ -1,5 +1,6 @@
 package com.example.demo.application.service;
 
+import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -8,11 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.controller.ImageController;
+
 @Service
 public class UserApplicationService {
 	
 	@Autowired
 	private MessageSource messageSource;
+	
+	@Autowired
+	private ImageController imageController;
 	
 	//性別のMapを生成
 	public Map<String, Integer> getGenderMap() {
@@ -25,18 +31,13 @@ public class UserApplicationService {
 	}
 	
 	//顔のMapを生成
-	public Map<String, Integer> getFaceMap() {
-		Map<String, Integer> faceMap = new LinkedHashMap <>();
-		String soGood = messageSource.getMessage("sogood", null, Locale.JAPANESE);
-		String good = messageSource.getMessage("good", null, Locale.JAPANESE);
-		String normal = messageSource.getMessage("normal", null, Locale.JAPANESE);
-		String bad = messageSource.getMessage("bad", null, Locale.JAPANESE);
-		String soBad = messageSource.getMessage("sobad", null, Locale.JAPANESE);
-		faceMap.put(soGood, 5);
-		faceMap.put(good, 4);
-		faceMap.put(normal, 3);
-		faceMap.put(bad, 2);
-		faceMap.put(soBad, 1);
-		return faceMap;
+	public String[] getFaceMap() throws IOException {
+		String[] condition = new String[5];
+		condition[0] = imageController.getImage("verySad");
+		condition[1] = imageController.getImage("sad");
+		condition[2] = imageController.getImage("normal");
+		condition[3] = imageController.getImage("happy");
+		condition[4] = imageController.getImage("veryHappy");
+		return condition;
 	}
 }

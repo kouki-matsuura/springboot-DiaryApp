@@ -15,35 +15,35 @@
 	text-align: center;
 	width: 100%;
 }
-table {
+#calendar table {
     outline: 2px solid #ddd;
     border-collapse: collapse;
     width: 100%;
 }
-th {
+#calendar th {
     color: #000;
 }
-th, td {
+#calendar th, td {
     outline: 1px solid #ddd;
     padding-top: 10px;
     padding-bottom: 10px;
     text-align: center;
 }
 /*日曜日*/
-td:first-child {
+#calendar td:first-child {
     color: red;
 }
 /*土曜日*/
-td:last-child {
+#calendar td:last-child {
     color: blue;
 }
 /*前後月の日付*/
-td.disabled {
+#calendar td.disabled {
     color: gray;
 }
 
 /*本日*/
-td.today {
+#calendar td.today {
     background-color: #D65E72;
     color: #fff;
 }

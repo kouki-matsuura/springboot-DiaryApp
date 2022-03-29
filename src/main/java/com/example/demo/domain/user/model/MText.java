@@ -9,6 +9,6 @@ import lombok.Data;
 public class MText {
 	private Date day;
 	private String title;
-	private Integer face;
+	private String face;
 	private String text;
 }

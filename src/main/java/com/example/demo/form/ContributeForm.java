@@ -11,7 +11,7 @@ public class ContributeForm {
 	private String title;
 	
 	@NotNull(groups=ValidGroup1.class)
-	private Integer face;
+	private String face;
 	
 	@NotNull(groups=ValidGroup1.class)
 	private String text;
