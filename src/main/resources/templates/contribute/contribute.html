@@ -10,14 +10,18 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <link rel="stylesheet" th:href="@{/css/top/calendar.css}">
 <link rel="stylesheet" th:href="@{/css/top/profile.css}">
 <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+<link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 <!--  JS読込 -->
-<script th:src="@{/webjars/jquery/jquery.min.js}" defer></script>
-<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript" th:src="@{/js/top/calendar.js}"></script>
+
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 <title>投稿画面</title>
 </head>
 <body class="bg-light">
+	<!-- ヘッダー -->
 	<nav layout:replace="~{layout/header::header}"></nav>
 	<div class="container" style="max-width: none; margin-top: 55px;">
 		<div class="row">
@@ -25,8 +29,8 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 				<nav layout:replace="~{layout/sidebar::sidebar}"></nav>
 			</div>
 			<div class="col main-content">
-				<form id="contribute-form" method="post" action="/contribute/contribute" class="form-contribute ml-5 mr-5" th:object="${contributeForm}">
-					<h1 class="text-center" th:text="#{contribute.title}"></h1>
+				<form id="contribute-form" method="post" action="/contribute/contribute" class="" th:object="${contributeForm}">
+					<h1 class="text-center mt-3" th:text="#{contribute.title}"></h1>
 					<!-- タイトル -->
 					<div class="form-group">
 						<label for="title" th:text="#{contribute.textTitle}"></label>
@@ -40,20 +44,78 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 							th:errorclass="is-invalid"/>
 							<img th:src="${item}" style="width:70px; height:70px">
 						</div>
-						<div class="text-danger" th:if="${#fields.hasErrors('face')}" th:errors="*{face}"></div>
-			
-						
+						<div class="text-danger" th:if="${#fields.hasErrors('face')}" th:errors="*{face}"></div>			
 					</div>
 					<!-- テキスト -->
 					<div class="form-group">
-						<label for="text" th:text="#{contribute.text}"></label>
-						<input type="text" class="form-control" th:field="*{text}" th:errorclass="is-invalid"/>
-						<div class="invalid-feedback" th:errors="*{text}"></div>
+						<p><string>今日あったことは？</string></p>
+						<div id="diary" class="bg-light" >
+							<div id="imageput"></div>
+						</div>
+						<input type="text" id="editor-input" name="editor-input" class="d-none" th:field="*{text}">
 					</div>
 					<!-- 完了ボタン -->
-					<input type="submit" th:value="#{contribute.complete}" class="btn btn-primary w-100 mt-3"/>
+					<div class="text-right">
+						<input  type="submit" th:value="#{contribute.complete}" class="btn btn-primary  mt-3"/>
+					</div>
 				</form>
 			</div>
 		</div>
 	</div>
+	<script>
+		var toolbarOptions = [
+			['bold', 'italic', 'underline','strike'],
+			[{'color': []}, {'background': []}],
+			['image'],
+		];
+		var editor = document.getElementById('diary');
+		var editorInput = document.getElementById('editor-input');
+		 
+		var quill = new Quill(editor, {
+		  theme: 'snow',
+		  modules: {
+			  toolbar: toolbarOptions,
+		  },
+		});
+		const initialHeight = 300;
+		quill.on('text-change', function(delta, oldDelta, source) {
+		  var editorHtml = editor.querySelector('.ql-editor').innerHTML;
+		  var sl ='.ql-editor img';
+		  $(sl).each(function(){
+			  var orgW = $(this).width();
+			  var orgH = $(this).height();
+			  if(orgH > 300) {
+				  $(this).height(initialHeight);
+				  $(this).width(orgW * (initialHeight / orgH));
+			  }
+		  })
+		  editorInput.value = editorHtml;
+		});
+		
+	</script>
+	<script type="text/javascript" th:inline="javascript">
+	/*<![CDATA[*/
+	const profile = /*[[${profileForm}]]*/
+	const userPhoto = /*[[${defaultImage}]]*/
+	console.log(profile);
+	if(profile.name == '未登録') {
+		$('#profile_name').text('未登録');
+	}
+	if(profile.photo == '未登録') {
+		$('#profile_photo').html(`<img src="${userPhoto}" style="width:100px; height: 100px;"/>`);
+	}
+	if(profile.gender == 3) {
+		$('#profile_gender').text('未登録');
+	}
+	if(profile.birthday == "9999-01-01T00:00:00.000+09:00") {
+		$('#profile_birthday').text('未登録');
+	}
+	if(profile.age == -1) {
+		$('#profile_age').text('未登録');
+	}
+	if(profile.content == '未登録') {
+		$('#profile_content').html('プロフィールを入力してください');
+	}
+	/*]]>*/
+	</script>
 </body>

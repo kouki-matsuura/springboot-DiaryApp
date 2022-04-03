@@ -13,8 +13,11 @@ import lombok.Data;
 
 @Data
 public class ProfileForm {
+	
 	@NotBlank(groups=ValidGroup1.class)
 	private String name;
+	
+	private String photo;
 	
 	@DateTimeFormat(pattern="yyyy/MM/dd")
 	@NotNull(groups=ValidGroup1.class)
@@ -26,4 +29,6 @@ public class ProfileForm {
 	
 	@NotNull(groups=ValidGroup1.class)
 	private Integer gender;
+	
+	private String content;
 }

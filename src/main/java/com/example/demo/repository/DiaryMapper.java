@@ -10,7 +10,7 @@ import com.example.demo.domain.user.model.MText;
 @Mapper
 public interface DiaryMapper {
 	//投稿内容1件取得
-	public MText findOne(Date day);
+	public List<MText> findOne(Date day);
 	//投稿内容全件取得
 	public List<MText> findMany();
 	//投稿内容登録

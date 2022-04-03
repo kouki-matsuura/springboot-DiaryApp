@@ -10,11 +10,13 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <link rel="stylesheet" th:href="@{/css/top/calendar.css}">
 <link rel="stylesheet" th:href="@{/css/top/profile.css}">
 <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@1.3.6/dist/quill.bubble.css" />
 <!--  JS読込 -->
 <script th:src="@{/webjars/jquery/jquery.min.js}" defer></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript" th:src="@{/js/top/calendar.js}"></script>
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 <title>日記アプリ</title>
 </head>
 <body class="bg-light">
@@ -23,29 +25,68 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 	<div class="container" style="max-width: none; margin-top: 55px;">
 		<div class="row">
 			<div class="col-3 sidebar-content" >
-				<nav layout:replace="~{layout/sidebar::sidebar}"></nav>
+				<nav class="position-fixed" layout:replace="~{layout/sidebar::sidebar}"></nav>
 			</div>
-			<div class="col main-content">
-				<table class="table table-striped table-bordered table-hover">
-					<thead class="thead-light">
-					<tr>
-						<th class="th-width">日付</th>
-						<th class="th-width">タイトル</th>
-						<th class="th-width">調子</th>
-						<th class="th-width">内容</th>
-					</tr>
-					</thead>
-					<tbody>
-						<tr th:each="diary: ${diaries}">
-							<td th:text="${#dates.format(diary.day, 'MM/dd')}"></td>
-							<td th:text="${diary.title}"></td>
-							<td><img th:src="${diary.face}" style="width:70px; height:70px"></td>
-							<td th:text="${diary.text}"></td>
-						</tr>
-					</tbody>
-				</table>
+			<div id="contents" class="col main-content">
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript" th:inline="javascript">
+		/*<![CDATA[*/
+		
+		var contents =``;
+		const diaries = /*[[${diaries}]]*/
+
+		diaries.forEach(function(diary) {
+			var day = formatDate(new Date(diary.day));
+			contents += `
+			<div class="d-flex flex-column mt-3 bg-light border border-dark">
+				<div class="pl-3 pr-3 bd-highlight row">
+					<div class="col-2 border border-dark border-left-0 d-flex align-items-center justify-content-center">${day}</div>
+					<div class="col-10 border border-dark d-flex align-items-center justify-content-center" style="font-size: 30px; font-weight: bold;">${diary.title}</div>
+				</div>
+				<div class="p-4 bd-highlight row">
+					<div class="col-2 d-flex border-right border-dark align-items-center justify-content-center"><img src="${diary.face}"style="width:70px; height:70px"></img></div>
+					<div class="col  editor ml-3">${diary.text}</div>
+				</div>
+			</div>
+			`;
+		})
+		$('#contents').html(contents);
+		var quill = new Quill('.editor', { theme: 'bubble', readonly: true});
+		
+		//日付フォーマット変更メソッド
+		function formatDate(dt) {
+			var m = ('00' + (dt.getMonth()+1)).slice(-2);
+			var d = ('00' + dt.getDate()).slice(-2);
+			return (m + '/' + d);
+		}
+		/*]]>*/
+	</script>
+	<script type="text/javascript" th:inline="javascript">
+	/*<![CDATA[*/
+	const profile = /*[[${profileForm}]]*/
+	const userPhoto = /*[[${defaultImage}]]*/
+	console.log(profile);
+	if(profile.name == '未登録') {
+		$('#profile_name').text('未登録');
+	}
+	if(profile.photo == '未登録') {
+		$('#profile_photo').html(`<img src="${userPhoto}" style="width:100px; height: 100px;"/>`);
+	}
+	if(profile.gender == 3) {
+		$('#profile_gender').text('未登録');
+	}
+	if(profile.birthday == "9999-01-01T00:00:00.000+09:00") {
+		$('#profile_birthday').text('未登録');
+	}
+	if(profile.age == -1) {
+		$('#profile_age').text('未登録');
+	}
+	if(profile.content == '未登録') {
+		$('#profile_content').html('プロフィールを入力してください');
+	}
+	/*]]>*/
+	</script>
 </body>
 </html>

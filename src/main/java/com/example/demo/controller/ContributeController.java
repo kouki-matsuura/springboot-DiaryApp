@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.demo.UserService;
 import com.example.demo.application.service.UserApplicationService;
 import com.example.demo.domain.user.model.MText;
+import com.example.demo.domain.user.model.MUser;
 import com.example.demo.form.ContributeForm;
 import com.example.demo.form.GroupOrder;
 
@@ -28,12 +29,18 @@ public class ContributeController {
 	private UserService userService;
 	@Autowired
 	private ModelMapper modelMapper;
+	@Autowired
+	private ImageController imageController;
 	
 	@GetMapping("/contribute")
 	public String getContribute(@ModelAttribute ContributeForm form, Model model) throws IOException {
 		//faceMapを取得
 		String[] condition = userApplicationService.getFaceMap();
+		MUser user = userService.getProfile();
+		String defaultImage = imageController.getImage("User");
 		model.addAttribute("condition", condition);
+		model.addAttribute("profileForm", user);
+		model.addAttribute("defaultImage", defaultImage);
 		return "contribute/contribute";
 	}
 	

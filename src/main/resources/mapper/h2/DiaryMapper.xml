@@ -6,7 +6,7 @@
 <mapper namespace="com.example.demo.repository.DiaryMapper">
 	<!-- マッピング定義 -->
 	<resultMap type="com.example.demo.domain.user.model.MText" id="diary">
-		<id column="day" property="day" />
+		<result column="day" property="day" />
 		<result column="title" property="title" />
 		<result column="face" property="face" />
 		<result column="text" property="text" />
@@ -26,11 +26,11 @@
 	   #{text}
 	  )
  	</insert>
-	<!-- 日記1件取得 -->
+	<!-- 日記を日付で取得 -->
 	 <select id="findOne" resultMap="diary">
 	 	select * from m_diary where m_diary.day =#{day}
 	 </select>
-	 <!-- 日記全権取得 -->
+	 <!-- 日記全件取得 -->
 	 <select id="findMany" resultType="MText">
 	 	select * from m_diary
 	 </select>

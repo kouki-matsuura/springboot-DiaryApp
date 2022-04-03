@@ -27,6 +27,7 @@ public class UserApplicationService {
 		String female = messageSource.getMessage("female", null, Locale.JAPANESE);
 		genderMap.put(male, 1);
 		genderMap.put(female, 2);
+		genderMap.put("未登録", 3);
 		return genderMap;
 	}
 	

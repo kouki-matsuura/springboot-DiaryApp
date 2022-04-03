@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.io.IOException;
 import java.util.Map;
 
 import org.modelmapper.ModelMapper;
@@ -18,14 +19,13 @@ import com.example.demo.application.service.UserApplicationService;
 import com.example.demo.domain.user.model.MUser;
 import com.example.demo.form.GroupOrder;
 import com.example.demo.form.ProfileForm;
-import com.example.demo.form.UserProfileForm;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("/profile")
 @Slf4j
-public class ProfileController {
+public class EditProfileController {
 	
 	@Autowired
 	private UserApplicationService userApplicationService;
@@ -35,18 +35,6 @@ public class ProfileController {
 	
 	@Autowired
 	private ModelMapper modelMapper;
-	
-	@GetMapping("/profile")
-	public String getProfile(UserProfileForm form, Model model) {
-		MUser user = userService.getProfile();
-		System.out.print("muser:"+ user);
-		//MUserをformに変換
-		form = modelMapper.map(user, UserProfileForm.class);
-		//Modelに登録
-		model.addAttribute("profileForm", form);
-		//profile.htmlに画面遷移
-		return "profile/profile";
-	}
 	
 	@GetMapping("/edit")
 	public String getEdit(Model model, @ModelAttribute ProfileForm form) {

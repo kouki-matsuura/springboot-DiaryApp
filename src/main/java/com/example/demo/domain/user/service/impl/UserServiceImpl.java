@@ -38,9 +38,9 @@ public class UserServiceImpl implements UserService {
 		return diary_mapper.findMany();
 	}
 	
-	//投稿内容1件取得
+	//投稿内容を日付で取得
 	@Override
-	public MText getDiary(Date day) {
+	public List<MText> getDiary(Date day) {
 		return diary_mapper.findOne(day);
 	}
 	

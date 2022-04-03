@@ -16,19 +16,20 @@ layout:decorate="~{main/top}">
 			</div>
 			<div id="calendar"></div>
 	</div>
-	<div class="profile_box">
+	<div class="profile_box" th:object="${profileForm}">
 		<div class="box-title">プロフィール</div>
 		<div class="profile_center">
-		<!-- <img th:src="${base64image}"/> -->
-		プロフィール写真
-		<div class="profile_name">名前</div>
+		<div id="profile_photo"  class="d-flex align-items-center justify-content-center" th:text="*{photo}"></div>
+		<div class="profile_name">名前:<span id="profile_name" th:text="*{name}"></span></div>
 		</div>
-		<p>自己紹介文</p>
 		<ul>
-			<li>性別:</li>
-			<li>出身地:</li>
-			<li>趣味:</li>
+			<li>性別:<span id="profile_gender" th:text="*{gender}"></span></li>
+			<li>誕生日:<span id="profile_birthday" th:text="*{#dates.format(birthday, 'YYYY/MM/dd')}"></span></li>
+			<li>年齢:<span id="profile_age" th:text="*{age}"></span></li>
 		</ul>
+		<strong>自己紹介文</strong>
+		<div id="profile_content" th:text="*{content}"></div>
 	</div>
 </nav>
+
 </html>

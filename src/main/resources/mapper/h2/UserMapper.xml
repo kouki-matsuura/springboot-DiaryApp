@@ -7,13 +7,15 @@
 	<!-- マッピング定義 -->
 	<resultMap type="com.example.demo.domain.user.model.MUser" id="user">
 		<id column="name" property="name" />
+		<result column="photo" property="photo" />
 		<result column="birthday" property="birthday" />
 		<result column="age" property="age" />
 		<result column="gender" property="gender" />
+		<result column="content" property="content" />
 	</resultMap>
 	<!-- プロフィール更新 -->
 	<update id="updateOne">
-		update m_user set name = #{user.name}, birthday = #{user.birthday}, age = #{user.age}, gender = #{user.gender}
+		update m_user set name = #{user.name}, photo = #{user.photo}, birthday = #{user.birthday}, age = #{user.age}, gender = #{user.gender}, content = #{user.content}
 	</update>
 	<!-- プロフィール検索 -->
 	<select id="findOne" resultMap="user">
