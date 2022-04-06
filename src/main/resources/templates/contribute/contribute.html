@@ -103,9 +103,15 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 	}
 	if(profile.photo == '未登録') {
 		$('#profile_photo').html(`<img src="${userPhoto}" style="width:100px; height: 100px;"/>`);
+	}else {
+		$('#profile_photo').html(`<img src="${profile.photo}" style="width:100px; height: 100px;"/>`);
 	}
 	if(profile.gender == 3) {
 		$('#profile_gender').text('未登録');
+	}else if(profile.gender == 1) {
+		$('#profile_gender').text('男性');
+	}else if(profile.gender == 2) {
+		$('#profile_gender').text('女性');
 	}
 	if(profile.birthday == "9999-01-01T00:00:00.000+09:00") {
 		$('#profile_birthday').text('未登録');

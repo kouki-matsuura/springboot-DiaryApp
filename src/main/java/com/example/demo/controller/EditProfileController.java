@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import java.io.IOException;
 import java.util.Map;
 
 import org.modelmapper.ModelMapper;
@@ -52,13 +51,13 @@ public class EditProfileController {
 			//プロフィール編集画面に戻る
 			return getEdit(model, form);
 		}
-		log.info(form.toString());
+		System.out.println(form.getPhoto().getClass());
 		//formをMUserクラスに変換
 		MUser user = modelMapper.map(form, MUser.class);
 		//ユーザー登録
 		System.out.print("user:"+user);
 		userService.updateProfile(user);
 		//プロフィール画面にリダイレクト
-		return "redirect:/profile/profile";
+		return "redirect:/main/top";
 	}
 }

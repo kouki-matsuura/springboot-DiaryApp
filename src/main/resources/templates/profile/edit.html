@@ -27,18 +27,28 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 			</div>
 			<div class="col main-content">
 				<form id="profileEdit-form" method="post" action="/profile/edit" class="form-profileEdit center-block ml-5 mr-5" th:object="${profileForm}">
-					<h1 class="text-center" th:text="#{profile.edit.title}"></h1>
+					<h1 class="text-center mb-4" th:text="#{profile.edit.title}"></h1>
+					<!-- プロフィール写真 -->
+					<div class="form-group">
+						<label for="photo" class="d-block">プロフィール写真</label>
+						<input id="imageFile" type="file" accept="image/jpeg, image/png" onchange="changeToBase64()" />
+						<input id="base64File" class="d-none" type="text" th:field="*{photo}" />
+					</div>
 					<!-- プロフィール名 -->
 					<div class="form-group">
 						<label for="name" th:text="#{name}"></label>
 						<input type="text" class="form-control" th:field="*{name}" th:errorclass="is-invalid"/>
 						<div class="invalid-feedback" th:errors="*{name}"></div>
 					</div>
-					<!-- 年齢 -->
+					<!-- 性別 -->
 					<div class="form-group">
-						<label for="age" th:text="#{age}"></label>
-						<input type="text" class="form-control" th:field="*{age}" th:errorclass="is-invalid"/>
-						<div class="invalid-feedback" th:errors="*{age}"></div>
+						<label th:text="#{gender}" class="d-block"></label>
+						<div th:each="item : ${genderMap}" class="form-check-inline">
+							<input type="radio" class="form-check-input" th:value="${item.value}" th:field="*{gender}"
+							th:errorclass="is-invalid"/>
+							<label class="form-check-label" th:text="${item.key}"></label>
+						</div>
+						<div class="text-danger" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></div>
 					</div>
 					<!-- 誕生日 -->
 					<div class="form-group">
@@ -47,14 +57,16 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 						th:errorclass="is-invalid"/>
 						<div class="invalid-feedback" th:errors="*{birthday}"></div>
 					</div>
-					<!-- 性別 -->
+					<!-- 年齢 -->
 					<div class="form-group">
-						<div th:each="item : ${genderMap}" class="form-check-inline">
-							<input type="radio" class="form-check-input" th:value="${item.value}" th:field="*{gender}"
-							th:errorclass="is-invalid"/>
-							<label class="form-check-label" th:text="${item.key}"></label>
-						</div>
-						<div class="text-danger" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></div>
+						<label for="age" th:text="#{age}"></label>
+						<input type="text" class="form-control" th:field="*{age}" th:errorclass="is-invalid"/>
+						<div class="invalid-feedback" th:errors="*{age}"></div>
+					</div>
+					<!-- 自己紹介文 -->
+					<div class="form-group">
+						<label for="content">自己紹介</label>
+						<textarea type="text" rows="5" class="form-control" th:field="*{content}"></textarea>
 					</div>
 					<!-- 完了ボタン -->
 					<input type="submit" th:value="#{user.profile.btn}" class="btn btn-primary w-100 mt-3"/>
@@ -62,5 +74,20 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 			</div>
 		</div>
 	</div>
+	<script>
+		function changeToBase64() {
+			const preview = document.querySelector('#base64File');
+			const file = document.querySelector('input[type=file]').files[0];
+			const reader = new FileReader();
+			
+			reader.addEventListener("load", function() {
+				//画像ファイルをbase64文字列に変換
+				 preview.value = reader.result;
+			}, false);
+			if (file) {
+				reader.readAsDataURL(file);
+			}
+		}
+	</script>
 </body>
 </html>
