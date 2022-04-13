@@ -15,6 +15,11 @@ public interface UserService {
 	public List<MText> getDiaries();
 	//投稿内容取得
 	public List<MText> getDiary(Date day);
+	public MText getDiaryByID(Integer id);
 	//投稿内容登録
 	public void setDiary(MText diary);
+	//投稿内容削除
+	public void deleteDiary(Integer id);
+	//投稿内容更新
+	public void updateDiary(MText diary);
 }

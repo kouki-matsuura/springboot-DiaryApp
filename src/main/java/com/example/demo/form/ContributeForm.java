@@ -7,6 +7,8 @@ import lombok.Data;
 
 @Data
 public class ContributeForm {
+	private Integer id;
+	
 	@NotBlank(groups=ValidGroup1.class)
 	private String title;
 	

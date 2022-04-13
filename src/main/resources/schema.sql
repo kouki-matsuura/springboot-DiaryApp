@@ -11,6 +11,7 @@ photo VARCHAR,
 
 CREATE TABLE IF NOT EXISTS m_diary
 (
+id INT PRIMARY KEY,
 title VARCHAR(50),
 day DATE,
 face VARCHAR,

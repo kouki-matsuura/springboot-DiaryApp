@@ -7,6 +7,7 @@ import lombok.Data;
 
 @Data
 public class MText {
+	private Integer id;
 	private Date day;
 	private String title;
 	private String face;

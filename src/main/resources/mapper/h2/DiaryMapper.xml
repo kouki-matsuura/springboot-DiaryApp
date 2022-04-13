@@ -6,6 +6,7 @@
 <mapper namespace="com.example.demo.repository.DiaryMapper">
 	<!-- マッピング定義 -->
 	<resultMap type="com.example.demo.domain.user.model.MText" id="diary">
+		<id column="id" property="id" />
 		<result column="day" property="day" />
 		<result column="title" property="title" />
 		<result column="face" property="face" />
@@ -14,12 +15,14 @@
 	<!-- 日記登録 -->
 	<insert id="insertOne">
 	  insert into m_diary(
+	  	id,
 	  	day,
 	  	title,
 	  	face,
 	  	text
 	  )
 	  values (
+	   #{id},
 	   #{day},
 	   #{title},
 	   #{face},
@@ -30,8 +33,20 @@
 	 <select id="findOne" resultMap="diary">
 	 	select * from m_diary where m_diary.day =#{day}
 	 </select>
+	 <!-- 日記をIDで取得 -->
+	 <select id="findOneByID" resultMap="diary">
+	 	select * from m_diary where m_diary.id = #{id}
+	 </select>
 	 <!-- 日記全件取得 -->
 	 <select id="findMany" resultType="MText">
 	 	select * from m_diary
+	 </select>
+	 <!-- 日記をIDで削除 -->
+	 <select id="deleteOne">
+	 	delete from m_diary where m_diary.id = #{id}
+	 </select>
+	 <!-- 日記をIDで更新 -->
+	 <select id="updateOne">
+	 	update m_diary set title = #{title}, face = #{face}, text = #{text} where m_diary.id = #{id}
 	 </select>
 </mapper>
