@@ -21,4 +21,23 @@
 	<select id="findOne" resultMap="user">
 		select * from m_user 
 	</select>
+	<!-- プロフィール登録 -->
+	<select id="insertOne">
+		insert into m_user(
+	  	name,
+	  	photo,
+	  	birthday,
+	  	age,
+	  	gender,
+	  	content
+	  )
+	  values (
+	   #{user.name},
+	   #{user.photo},
+	   #{user.birthday},
+	   #{user.age},
+	   #{user.gender},
+	   #{user.content}
+	  )
+	</select>
 </mapper>

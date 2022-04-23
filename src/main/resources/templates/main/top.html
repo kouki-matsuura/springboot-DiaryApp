@@ -34,37 +34,55 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 	</div>
 	<script type="text/javascript" th:inline="javascript">
 		/*<![CDATA[*/
-		
-		var contents =``;
 		const diaries = /*[[${diaries}]]*/
+			
+		window.onload = function() {
+			showProcess(showDate);
+			console.log('初期表示')
+			makeContents(showDate.getMonth());
+			console.log('makecontent');
+		}
+		
+		function makeContents() {
+			var contents =`
+				<div class="mt-3">
+					<input id="search" type="search" name="search" placeholder="キーワードを入力"/>
+					<button onclick="searchWord()" class="search_submit"></button>
+					<div class="search-result_hit-num"></div>			
+				</div>
+				`;
 
-		diaries.forEach(function(diary) {
-			var day = formatDate(new Date(diary.day));
-			console.log(diary.id);
-			contents += `
-			<div class="d-flex flex-column mt-3 bg-light border border-dark">
-				<div class="pl-3 pr-3 bd-highlight row">
-					<div class="col-2 border border-dark border-left-0 d-flex align-items-center justify-content-center">${day}</div>
-					<div class="col-10 border border-dark d-flex align-items-center justify-content-center" style="font-size: 30px; font-weight: bold;">${diary.title}</div>
-				</div>
-				<div class="p-4 bd-highlight row">
-					<div class="col-2 d-flex border-right border-dark align-items-center justify-content-center"><img src="${diary.face}"style="width:70px; height:70px"></img></div>
-					<div class="col  editor ml-3">${diary.text}</div>
-				</div>
-				<div class="m-3 text-right">
-					<form th:action="@{/top}" method="post">
-						<input class="d-none" type="text" name="ID" value="${diary.id}">
-						<button type="submit" name="delete" class="delete btn btn-danger text-light"> 削除</button>
-						<button type="submit" name="edit" class="edit btn btn-info text-light"> 編集</button>
-					</form>
+			diaries.forEach(function(diary) {
+				var day = formatDate(new Date(diary.day));
+				if (showDate.getMonth() ==  new Date(diary.day).getMonth()) {
 					
-
-				</div>
-			</div>
-			`;
-		})
-		$('#contents').html(contents);
-		var quill = new Quill('.editor', { theme: 'bubble', readonly: true});
+					contents += `
+					<div id="diary-${diary.id}" class=" mt-3 mb-3 bg-light border border-dark">
+						<div class="pl-3 pr-3 bd-highlight row">
+							<div class="col-2 border border-dark border-left-0 d-flex align-items-center justify-content-center">${day}</div>
+							<div class="col-10 border border-dark d-flex align-items-center justify-content-center" style="font-size: 30px; font-weight: bold;">${diary.title}</div>
+						</div>
+						<div class="p-4 bd-highlight row">
+							<div class="col-2 d-flex border-right border-dark align-items-center justify-content-center"><img src="${diary.face}"style="width:70px; height:70px"></img></div>
+							<div class="col  editor ml-3" name="text">${diary.text}</div>
+						</div>
+						<div class="m-3 text-right">
+							<form th:action="@{/top}" method="post">
+								<input class="d-none" type="text" name="ID" value="${diary.id}">
+								<button type="submit" name="delete" class="delete btn btn-danger text-light"> 削除</button>
+								<button type="submit" name="edit" class="edit btn btn-info text-light"> 編集</button>
+							</form>
+						</div>
+					</div>
+					`;
+				}else {
+					console.log("一致しませんでした。");
+					console.log("showDate.getMonth() :", showDate.getMonth());
+				}
+			})
+			$('#contents').html(contents);
+			var quill = new Quill('.editor', { theme: 'bubble', readonly: true});
+		}
 		
 		//日付フォーマット変更メソッド
 		function formatDate(dt) {
@@ -72,38 +90,73 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 			var d = ('00' + dt.getDate()).slice(-2);
 			return (m + '/' + d);
 		}
+		
+		function searchWord() {
+			const searchResult = [];
+			const searchText = $("#search").val();
+			var targetText;
+			var hitNum;
+				
+			//検索結果エリアの表示を空にする
+			$('#search').empty();
+			$('.search-result_hit-num').empty();
+				
+			//検索ボックスに値が入ってる場合
+			if (searchText != '') {
+				diaries.forEach(function(diary) {
+					targetText = diary.title + diary.text;
+					//検索対象となるリストに入力された文字列が存在するかどうか判断
+					if (targetText.indexOf(searchText) != -1) {
+						console.log("一致しました：", diary.id);
+						$('#diary-'+diary.id).removeClass('d-none');
+						searchResult.push(diary.id);
+					}else {
+						console.log("一致しませんでした：", diary.id);
+						console.log('#diary-'+diary.id);
+						$('#diary-'+diary.id).addClass('d-none');
+					}
+				})
+			}else {
+				diaries.forEach(function(diary) {
+					$('#diary-'+diary.id).removeClass('d-none');
+					searchResult.push(diary.id);
+				})
+			}
+			hitNum = '<span>検索結果</span>:' + searchResult.length + '件見つかりました。';
+			$('.search-result_hit-num').append(hitNum);
+		}
 		/*]]>*/
 	</script>
 	<script type="text/javascript" th:inline="javascript">
 	/*<![CDATA[*/
 	const profile = /*[[${profileForm}]]*/
-	
-	console.log('profile');
 	const userPhoto = /*[[${defaultImage}]]*/
 	console.log(profile)
-	if(profile.name == '未登録') {
-		$('#profile_name').text('未登録');
-	}
-	if(profile.photo == '未登録') {
-		$('#profile_photo').html(`<img src="${userPhoto}" style="width:100px; height: 100px;"/>`);
-	}else {
-		$('#profile_photo').html(`<img src="${profile.photo}" style="width:100px; height: 100px;"/>`);
-	}
 	if(profile.gender == 3) {
-		$('#profile_gender').text('未登録');
-	}else if(profile.gender == 1) {
-		$('#profile_gender').text('男性');
+		$('#profile_gender').text("未設定");
 	}else if(profile.gender == 2) {
-		$('#profile_gender').text('女性');
+		$('#profile_gender').text("女性");
+	}else if(profile.gender == 1) {
+		$('#profile_gender').text("男性");
 	}
-	if(profile.birthday == "9999-01-01T00:00:00.000+09:00") {
-		$('#profile_birthday').text('未登録');
+	if(profile.name != null) {
+		$('#profile_name').html(`${profile.name}`);
 	}
-	if(profile.age == -1) {
-		$('#profile_age').text('未登録');
+	if(profile.photo != null) {
+		$('#profile_photo').html(`<img src="${profile.photo}" style="width:100px; height: 100px;"/>`);
+	}else {
+		$('#profile_photo').html(`<img src="${userPhoto}" style="width:100px; height: 100px;"/>`);
 	}
-	if(profile.content == '未登録') {
-		$('#profile_content').html('プロフィールを入力してください');
+	if(profile.birthday != null) {
+		const birthday = new Date(profile.birthday);
+		console.log(birthday.getDate())
+		$('#profile_birthday').html(`${birthday.getFullYear()}年${birthday.getMonth()+1}月${birthday.getDate()}日`);
+	}
+	if(profile.age != null) {
+		$('#profile_age').html(`${profile.age}`);
+	}
+	if(profile.content != null) {
+		$('#profile_content').html(`${profile.content}`);
 	}
 	/*]]>*/
 	</script>

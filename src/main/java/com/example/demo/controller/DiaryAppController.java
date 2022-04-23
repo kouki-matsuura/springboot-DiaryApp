@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +20,7 @@ import com.example.demo.form.ContributeForm;
 import com.example.demo.form.ProfileForm;
 
 @Controller
-@RequestMapping("/main")
+@RequestMapping("main")
 public class DiaryAppController {
 	@Autowired
 	private UserService userService;
@@ -27,16 +28,22 @@ public class DiaryAppController {
 	@Autowired
 	private ImageController imageController;
 	
-	
 	@GetMapping("/top")
 	public String getTop(ContributeForm form, ProfileForm profileForm, Model model) throws IOException {
 		List<MText> diaries = userService.getDiaries();
+		String dateToStr = DateFormatUtils.format(diaries.get(0).getDay(), "M");
+		System.out.println("M: "+dateToStr);
 		MUser user = userService.getProfile();
 		String defaultImage = imageController.getImage("User");
 		model.addAttribute("profileForm", user);
 		model.addAttribute("diaries", diaries);	
 		model.addAttribute("defaultImage", defaultImage);
-		return "main/Top";
+		return "main/top";
+	}
+	
+	@PostMapping(value="/top", params="prev")
+	public String prevMonth() {
+		return "redirect:./top";
 	}
 	
 	@PostMapping(value="/top", params="delete")
@@ -52,4 +59,5 @@ public class DiaryAppController {
 		redirectAttrs.addAttribute("id", ID);
 		return "redirect:/contribute/edit";
 	}
+
 }

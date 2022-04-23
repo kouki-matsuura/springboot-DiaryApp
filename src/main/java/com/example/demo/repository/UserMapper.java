@@ -11,4 +11,6 @@ public interface UserMapper {
 	public MUser findOne();
 	//プロフィール更新
 	public void updateOne(@Param("user") MUser user);
+	//プロフィール登録
+	public void insertOne(@Param("user") MUser user);
 }

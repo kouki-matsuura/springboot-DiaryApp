@@ -95,6 +95,11 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 	</script>
 	<script type="text/javascript" th:inline="javascript">
 	/*<![CDATA[*/
+	
+	window.onload = function() {
+			showProcess(showDate);
+			console.log('初期表示')
+	}
 	const profile = /*[[${profileForm}]]*/
 	const userPhoto = /*[[${defaultImage}]]*/
 	console.log(profile);

@@ -39,7 +39,7 @@
 	 </select>
 	 <!-- 日記全件取得 -->
 	 <select id="findMany" resultType="MText">
-	 	select * from m_diary
+	 	select * from m_diary 
 	 </select>
 	 <!-- 日記をIDで削除 -->
 	 <select id="deleteOne">

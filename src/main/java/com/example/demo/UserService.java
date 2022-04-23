@@ -11,6 +11,8 @@ public interface UserService {
 	public void updateProfile(MUser user);
 	//プロフィール取得
 	public MUser getProfile();
+	//プロフィール新規登録
+	public void setProfile(MUser user);
 	//投稿内容全件取得
 	public List<MText> getDiaries();
 	//投稿内容取得

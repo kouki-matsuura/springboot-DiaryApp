@@ -16,11 +16,23 @@ layout:decorate="~{main/top}">
 			</div>
 			<div id="calendar"></div>
 	</div>
-	<div class="profile_box" th:object="${profileForm}">
+	<div class="profile_box">
+	<th:block th:if = "${profileForm == null}">
 		<div class="box-title">プロフィール</div>
+		<div id="profile_photo"  class="d-flex align-items-center justify-content-center"></div>
+		<div class="profile_name">名前:<span id="profile_name">未設定</span></div>
+		<ul>
+			<li>性別:<span id="profile_gender">未設定</span></li>
+			<li>誕生日:<span id="profile_birthday">未設定</span></li>
+			<li>年齢:<span id="profile_age">未設定</span></li>
+		</ul>
+		<strong>自己紹介文</strong>
+	</th:block>
+	<th:block th:if = "${!(profileForm == null)}">
+		<div class="box-title" th:object="${profileForm}">プロフィール</div>
 		<div class="profile_center">
-		<div id="profile_photo"  class="d-flex align-items-center justify-content-center" th:text="*{photo}"></div>
-		<div class="profile_name">名前:<span id="profile_name" th:text="*{name}"></span></div>
+			<div id="profile_photo"  class="d-flex align-items-center justify-content-center" th:text="*{photo}"></div>
+			<div class="profile_name">名前:<span id="profile_name" th:text="*{name}"></span></div>
 		</div>
 		<ul>
 			<li>性別:<span id="profile_gender" th:text="*{gender}"></span></li>
@@ -29,6 +41,7 @@ layout:decorate="~{main/top}">
 		</ul>
 		<strong>自己紹介文</strong>
 		<div id="profile_content" th:text="*{content}"></div>
+	</th:block>
 	</div>
 </nav>
 

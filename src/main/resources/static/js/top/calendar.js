@@ -2,22 +2,19 @@
 	const today = new Date();
 	var showDate = new Date(today.getFullYear(), today.getMonth(), 1);
 	
-	//初期表示
-	window.onload = function() {
-		showProcess(showDate);
-		console.log('初期表示')
-	}
 	//前の月表示
 	function prev() {
 		showDate.setMonth(showDate.getMonth() - 1);
 		showProcess(showDate);
-		console.log('前の月表示')
+		console.log('前の月表示');
+		makeContents();
 	}
 	//次の月表示
 	function next() {
 		showDate.setMonth(showDate.getMonth() + 1);
 		showProcess(showDate);
-		console.log('次の月表示')
+		console.log('次の月表示');
+		makeContents();
 	}
 	
 	//カレンダー表示

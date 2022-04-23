@@ -27,6 +27,11 @@ public class UserServiceImpl implements UserService {
 		user_mapper.updateOne(user);
 	}
 	
+	//プロフィール新規登録
+	public void setProfile(MUser user) {
+		user_mapper.insertOne(user);
+	}
+	
 	//プロフィール取得
 	@Override
 	public MUser getProfile() {
@@ -35,7 +40,7 @@ public class UserServiceImpl implements UserService {
 	
 	//投稿内容全件取得
 	@Override
-	public List<MText> getDiaries() {
+	public List<MText> getDiaries(){
 		return diary_mapper.findMany();
 	}
 	

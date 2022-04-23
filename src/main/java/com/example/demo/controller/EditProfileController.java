@@ -37,11 +37,18 @@ public class EditProfileController {
 	
 	@GetMapping("/edit")
 	public String getEdit(Model model, @ModelAttribute ProfileForm form) {
-		//性別を取得
 		Map<String, Integer> genderMap = userApplicationService.getGenderMap();
 		model.addAttribute("genderMap", genderMap);
 		
 		return "profile/edit";
+	}
+	
+	@GetMapping("/new")
+	public String getNew(Model model, @ModelAttribute ProfileForm form) {
+		Map<String, Integer> genderMap = userApplicationService.getGenderMap();
+		model.addAttribute("genderMap", genderMap);
+		
+		return "profile/new";
 	}
 	
 	@PostMapping("/edit")
@@ -51,13 +58,23 @@ public class EditProfileController {
 			//プロフィール編集画面に戻る
 			return getEdit(model, form);
 		}
-		System.out.println(form.getPhoto().getClass());
 		//formをMUserクラスに変換
 		MUser user = modelMapper.map(form, MUser.class);
 		//ユーザー登録
 		System.out.print("user:"+user);
 		userService.updateProfile(user);
 		//プロフィール画面にリダイレクト
+		return "redirect:/main/top";
+	}
+	
+	@PostMapping("/new")
+	public String postNew(Model model, @ModelAttribute @Validated(GroupOrder.class) ProfileForm form, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return getNew(model, form);
+		}
+		MUser user = modelMapper.map(form, MUser.class);
+		userService.setProfile(user);
+		//トップ画面にリダイレクト
 		return "redirect:/main/top";
 	}
 }
